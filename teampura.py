@@ -4,8 +4,8 @@ import urllib
 import json
 
 
-API_KEY = ""
-SECRET_KEY = ""
+API_KEY = "TJu6DpkTsom8OPvF8lDE"
+SECRET_KEY = "zQphAVHOVmBYdEPFYyKhkoCFXJx6SXiuFRJ0duqKArFWhTGmNn"
 
 class Oauth():
     # Create teampura login url
@@ -58,7 +58,7 @@ class Teampura():
         fs = ""
         if filters:
             for name, value in filters.items():
-                fs += "&" + name + "=" + str(value).upper()
+                fs += "&" + name + "=" + str(value)
             url += fs
 
         return url
@@ -73,16 +73,19 @@ class Teampura():
         return api_response
 
     # Add or update something in teampura
-    def create_data(self, kind, data={}, category=""):
+    def crud(self, kind, data={}, category="", method=""):
         url = self.api_url(kind, category=category)
 
         data = json.dumps(data)
         req = urllib2.Request(url, data, {'Content-Type': 'application/json'})
+        if method:
+            req.get_method = lambda: method
         response = urllib2.urlopen(req)
         api_response = json.loads(response.read())
         response.close()
 
         return api_response
+
 
 
 
@@ -111,12 +114,12 @@ class Teampura():
 # kind = "items"
 # update_data = {"status": "DONE"}
 # item_id = "5665117697998848"
-# pura.create_data(kind, data=update_data, category=item_id)
+# pura.crud(kind, data=update_data, category=item_id)
 
 """ add item """
 # kind = "items"
 # new_data = {"title": "item title", "content": "item content"}
-# pura.create_data(kind, data=new_data)
+# pura.crud(kind, data=new_data)
 
 
 
