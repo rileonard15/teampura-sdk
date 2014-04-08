@@ -1,6 +1,38 @@
 import os
 import urllib2
+import urllib
 import json
+
+
+API_KEY = "G6lEODWzJ7wYg7h35beO"
+SECRET_KEY = "KQlaTio7DKxdWpSlXQ9FCWHsS5cyUwmo7DytdtDEvbHCD5b7DA"
+
+class Oauth():
+    # Create teampura login url
+    @classmethod
+    def login_url_generator(self, redirect_uri, scope=""):
+        # sample scope < user,project,items >
+        # sample redirect_uri http://www.myapp.com/login
+
+        url = "http://teampura.com/dialog/oauth?"
+        url += "api_key=" + API_KEY
+        url += "&redirect_uri=" + str(urllib.quote(redirect_uri, ''))
+        url += "&scope=" + scope
+
+        return url
+
+    # Generate access token using the code given
+    @classmethod
+    def generate_access_token(self, code):
+        url = "http://teampura.com/accesstoken?"
+        url += "api_key=" + API_KEY + "&"
+        url += "secret_key=" + SECRET_KEY + "&"
+        url += "code=" + code.replace(" ", "+") # replace space to "+" for url handling
+
+        response = urllib2.urlopen(url)
+        api_response = json.loads(response.read())
+
+        return api_response["token"]
 
 
 
@@ -53,10 +85,6 @@ class Teampura():
         response.close()
 
         return api_response
-
-
-
-
 
 
 
