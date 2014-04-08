@@ -4,8 +4,8 @@ import urllib
 import json
 
 
-API_KEY = "TJu6DpkTsom8OPvF8lDE"
-SECRET_KEY = "zQphAVHOVmBYdEPFYyKhkoCFXJx6SXiuFRJ0duqKArFWhTGmNn"
+API_KEY = ""
+SECRET_KEY = ""
 
 class Oauth():
     # Create teampura login url
