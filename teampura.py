@@ -4,8 +4,8 @@ import urllib
 import json
 
 
-API_KEY = "G6lEODWzJ7wYg7h35beO"
-SECRET_KEY = "KQlaTio7DKxdWpSlXQ9FCWHsS5cyUwmo7DytdtDEvbHCD5b7DA"
+API_KEY = ""
+SECRET_KEY = ""
 
 class Oauth():
     # Create teampura login url
@@ -32,9 +32,7 @@ class Oauth():
         response = urllib2.urlopen(url)
         api_response = json.loads(response.read())
 
-        return api_response["token"]
-
-
+        return api_response # this response contains json data
 
 class Teampura():
     # Add team name and token
@@ -85,6 +83,46 @@ class Teampura():
         response.close()
 
         return api_response
+
+
+
+""" SAMPLE USAGE """
+
+
+# from teampura import Oauth
+# from teampura import Teampura
+
+""" generate teampura code """
+
+# Oauth.login_url_generator("http://myapp.com/login", "user,items,projects,notes")
+
+""" generate accesstoken """
+# code = "< the code given by the teampura app >"
+# response = Oauth.generate_access_token(code)
+
+
+""" FETCH items """
+# pura = Teampura("< team_name >", response["token"])
+# kind = "items"
+# data = {"filter_status": "DONE"}
+# pura.fetch(kind, filters=data)
+
+""" Update item """
+# kind = "items"
+# update_data = {"status": "DONE"}
+# item_id = "5665117697998848"
+# pura.create_data(kind, data=update_data, category=item_id)
+
+""" add item """
+# kind = "items"
+# new_data = {"title": "item title", "content": "item content"}
+# pura.create_data(kind, data=new_data)
+
+
+
+
+
+
 
 
 
